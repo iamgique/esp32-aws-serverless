@@ -9,7 +9,7 @@ Demo project to Visualize Internet of Things with AWS Serverless
 ## General info
 This project is using to keep the necessary source code to demo Internet of Things with AWS Serverless
 
-![alt text](https://github.com/iamgique/esp32-aws-serverless.git/blob/main/screenshot/screenshot01.png?raw=true)
+![alt text](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot01.png?raw=true)
 
 ### Basic Knowledge
 Basic Knowledge of AWS cloud services, Serverless, NoSQL, Arduino ESP32, JavaScript and HTML
