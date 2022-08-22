@@ -9,8 +9,8 @@ Demo project to Visualize Internet of Things with AWS Serverless
 ## General info
 This project is using to keep the necessary source code to demo Internet of Things with AWS Serverless
 
-### Knowledge
-Basic Knowledge of AWS cloud services, JavaScript and HTML
+### Basic Knowledge
+Basic Knowledge of AWS cloud services, Serverless, NoSQL, Arduino ESP32, JavaScript and HTML
 
 ## Prerequisite
 ```
@@ -33,4 +33,3 @@ Project is created with:
 * Arduino ArduinoJSON library version: 6.19.4
 * Arduino PubSubClient library version: 2.8.0
 * Arduino DHT Sensor library version: 1.4.4
-	
