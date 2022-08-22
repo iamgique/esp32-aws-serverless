@@ -11,6 +11,9 @@ This project is using to keep the necessary source code to demo Internet of Thin
 
 ![alt text](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot01.png?raw=true)
 
+
+![alt text](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot02.png?raw=true)
+
 ### Basic Knowledge
 Basic Knowledge of AWS cloud services, Serverless, NoSQL, Arduino ESP32, JavaScript and HTML
 
