@@ -58,7 +58,7 @@ var humiditygraph = new Chart.Line(humiGraph, {data: humiInit, options: options}
 $(function() {
   getData();
   $.ajaxSetup({ cache: false });
-  setInterval(getData, 120000);
+  setInterval(getData, 10000);
 });
 
 function getData() {

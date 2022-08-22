@@ -121,5 +121,5 @@ void loop(){
  
   publishMessage();
   client.loop();
-  delay(120000);
+  delay(10000);
 }
