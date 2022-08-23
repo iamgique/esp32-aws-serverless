@@ -60,7 +60,6 @@ void connectAWS(){
  
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
   }
  
   net.setCACert(AWS_CERT_CA);
