@@ -117,22 +117,21 @@ Create AWS Lambda function to receive data from AWS IoT and `put` it into Dynamo
     * Select `AmazonDynamoDBFullAccess` > Attach pilices
     * Close page
 
-        ![Execution Role](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda02.png?raw=true)
+![Execution Role](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda02.png?raw=true)
 
-        ![Permission](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda03.png?raw=true)
+![Permission](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda03.png?raw=true)
 
-    * (Optional) You can use source below to allow only `PutItem` into DynamoDB.
-        ```json
-        {
-            "Version": "2012-10-17",
-            "Statement": {
-                "Effect": "Allow",
-                "Action": "dynamodb:PutItem",
-                "Resource": "arn:aws:dynamodb:{region}:{account}:table/{table_name}"
-            }
+* (Optional) You can use source below to allow only `PutItem` into DynamoDB.
+    ```json
+    {
+        "Version": "2012-10-17",
+        "Statement": {
+            "Effect": "Allow",
+            "Action": "dynamodb:PutItem",
+            "Resource": "arn:aws:dynamodb:{region}:{account}:table/{table_name}"
         }
-        ```
-
+    }
+    ```
 * Test > Go to Test in AWS Lambda page
   * Test event action > Select `Create new event`
   * Fill in Event name: `{event_name}`
@@ -144,14 +143,13 @@ Create AWS Lambda function to receive data from AWS IoT and `put` it into Dynamo
         "humidity": 72
     }
     ```
-  * Test
 
-    ![Test Lambda put to DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda04.png?raw=true)
+  ![Test Lambda put to DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda04.png?raw=true)
 
 * View the items in DynamoDB
   * Go to DynamoDB console > Tables > Explore items > Select `table_name` > `Run`
 
-    ![Explore items on DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB02.png?raw=true)
+![Explore items on DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB02.png?raw=true)
 
 ### STEP 3: AWS IoT Core (Create Message Routing and Things)
 * Go to AWS IoT
@@ -165,11 +163,11 @@ Create Rule to be message route to AWS Lambda.
     * Select: `Lambda`
     * Lambda function select: `{function_name}` (Lambda function name that you created)
 
-    ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot01.png?raw=true)
+![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot01.png?raw=true)
 
-    ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot02.png?raw=true)
+![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot02.png?raw=true)
 
-    ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot03.png?raw=true)
+![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot03.png?raw=true)
 
 * Test
   * Go to Test > MQTT test client > Select `Publish to a topic`
@@ -271,11 +269,14 @@ Prepare the software, ESP32 and DHT22 micro controller for send the data to AWS 
   
 ![ESP32 and DHT22](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/esp32-dht22-01.png?raw=true)
 ![ESP32 and DHT22](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/esp32-dht22-02.png?raw=true)
-* Connect `ESP32` to your `computer/laptop` 
-* Upload the source to ESP32
+
+* Connect `ESP32` to your `Computer/Laptop` 
+* Upload the source to `ESP32`
 * Click: `serial monitor`
   
 ![ESP32 and DHT22](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/esp32-dht22-03.png?raw=true)
+
+![DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB03.png?raw=true)
 
 ### STEP 5: Cognito Identity Pools
 Create Identity pools to get AWS Credentials with Unauthenticated identities and attach `AmazonDynamoDBReadOnlyAccess` policies into `Cognito Unauthenticated role`.
