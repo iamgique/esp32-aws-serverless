@@ -21,7 +21,9 @@ Connecting ESP32 to AWS IoT via MQTT protocol, Visualize Temperature and Humidit
   - [Appendix](#appendix)
 
 ## General info
-This project is the handbook and using to keep the necessary source code to demo Internet of Things with AWS Serverless
+This repository is the handbook and store the necessary source code to do Internet of Things with AWS Serverless
+
+<b>Please be careful about the costs that may be incurred.</b>
 
 ![Visualize](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot02.png?raw=true)
 
@@ -67,7 +69,7 @@ Create DynamoDB to store the data with `key` and `value` (payload).
     * timestamp: Number
 
 ![DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB01.png?raw=true)
-
+***
 ### STEP 2: Create AWS Lambda
 Create AWS Lambda function to receive data from AWS IoT and `put` it into DynamoDB.
 * Go to AWS Lambda
@@ -149,7 +151,7 @@ Create AWS Lambda function to receive data from AWS IoT and `put` it into Dynamo
   * Go to DynamoDB console > Tables > Explore items > Select `table_name` > `Run`
 
 ![Explore items on DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB02.png?raw=true)
-
+***
 ### STEP 3: AWS IoT Core (Create Message Routing and Things)
 * Go to AWS IoT
 #### Create Rule
@@ -211,7 +213,7 @@ Create Things to receive the `MQTT Protocol` from physical `ESP32`.
 ![Create Policy](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot06.png?raw=true)
 
 ![Download Certificates](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot07.png?raw=true)
-
+***
 ### STEP 4: Connect ESP32 to AWS IoT via MQTT protocol
 Prepare the software, ESP32 and DHT22 micro controller for send the data to AWS IoT via MQTT protocol.
 * Install Arduino IDE: [Download](https://www.arduino.cc/en/software "download arduino") (Select follow by your OS)
@@ -276,7 +278,7 @@ Prepare the software, ESP32 and DHT22 micro controller for send the data to AWS 
 ![ESP32 and DHT22](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/esp32-dht22-03.png?raw=true)
 
 ![DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB03.png?raw=true)
-
+***
 ### STEP 5: Cognito Identity Pools
 Create Identity pools to get AWS Credentials with Unauthenticated identities and attach `AmazonDynamoDBReadOnlyAccess` policies into `Cognito Unauthenticated role`.
 * Create Identity Pools
@@ -321,7 +323,7 @@ Create Identity pools to get AWS Credentials with Unauthenticated identities and
       * Attach policies
     
     ![Attach policies](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/cognito/cognito02.png?raw=true)
-
+***
 ### STEP 6: Create S3 Bucket
 Create AWS `S3 Bucket` to store and be the static web application.
 * Go to AWS S3
@@ -361,8 +363,9 @@ Create AWS `S3 Bucket` to store and be the static web application.
       * Upload > Close
   * Go to Properties
     * Static website hosting > Bucket website endpoint
-      * `http://{bucket_name}.s3-website-{region}.amazonaws.com/`
+      * Click: `http://{bucket_name}.s3-website-{region}.amazonaws.com/`
+* Congratulations
 
-* Finish
-
+![Visualize](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot02.png?raw=true)
+***
 ## Appendix
