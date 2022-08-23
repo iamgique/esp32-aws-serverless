@@ -1,11 +1,12 @@
 # esp32-aws-serverless
-Connecting ESP32 to AWS IoT via MQTT protocol, Visualize Temperature and Humidity into Web Application.
+Connecting <b>ESP32</b> to <b>AWS IoT</b> via MQTT protocol, Visualize Temperature and Humidity into Web Application.
 
 ## Table of contents
 - [esp32-aws-serverless](#esp32-aws-serverless)
   - [Table of contents](#table-of-contents)
   - [General info](#general-info)
     - [Basic Knowledge](#basic-knowledge)
+    - [Architecture](#architecture)
   - [Prerequisite](#prerequisite)
   - [Technologies](#technologies)
   - [Handbook](#handbook)
@@ -21,25 +22,26 @@ Connecting ESP32 to AWS IoT via MQTT protocol, Visualize Temperature and Humidit
   - [Appendix](#appendix)
 
 ## General info
-This repository is the handbook and store the necessary source code to do Internet of Things with AWS Serverless
+This repository is the handbook and stores the necessary source code to do Internet of Things with AWS Serverless.
+
+### Basic Knowledge
+AWS Cloud Services, Serverless, NoSQL, Arduino ESP32, JavaScript, and HTML.
 
 <b>Please be careful about the costs that may be incurred.</b>
 
 ![Visualize](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot02.png?raw=true)
 
+### Architecture
 ![Structure](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot01.png?raw=true)
-
-### Basic Knowledge
-Basic Knowledge of AWS cloud services, Serverless, NoSQL, Arduino ESP32, JavaScript and HTML
 
 ## Prerequisite
 ```
+AWS Account
+Arduino IDE
 ESP32 (with WiFi)
 DHT22 (Temperature Humidity Sensor)
-AWS Account free-tier
-Arduino IDE
 ```
-
+***
 ## Technologies
 Project is created with:
 * AWS IoT Core
@@ -53,11 +55,12 @@ Project is created with:
 * Arduino ArduinoJSON library version: 6.19.4
 * Arduino PubSubClient library version: 2.8.0
 * Arduino DHT Sensor library version: 1.4.4
-
+***
 ## Handbook
 To create this project, you can implement follwing these step below:
 ### STEP 0: Sign-Up or Sign-In to AWS console management.
-
+You can sign-up for a new account to use the free tier or sign in with your own account to AWS Console.
+***
 ### STEP 1: Create DynamoDB
 Create DynamoDB to store the data with `key` and `value` (payload).
 * Go to DynamoDB
