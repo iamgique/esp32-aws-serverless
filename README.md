@@ -79,58 +79,57 @@ To create this project, you can implement follwing these step below:
 
 ![Create Lambda function](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda01.png?raw=true)
 
-* Code Source
-  * `lambda/index.js`
-    * Fill in `{region}` (The region that you create on DynamoDB)
-    * Fill in `{publish_topic}` (This is using for prepare to put data into DynamoDB e.g. `esp32/pubTopic` or `demoPubTopic`)
-    * Fill in `{table_name}` (Fill the table name that you created)
-        ```js
-        const AWS = require('aws-sdk');
-        const docClient = new AWS.DynamoDB.DocumentClient({region: '{region}'}); // change this
+* Source: `lambda/index.js`
+  * Fill in `{region}` (The region that you create on DynamoDB)
+  * Fill in `{publish_topic}` (This is using for prepare to put data into DynamoDB e.g. `esp32/pubTopic` or `demoPubTopic`)
+  * Fill in `{table_name}` (Fill the table name that you created)
+    ```js
+    const AWS = require('aws-sdk');
+    const docClient = new AWS.DynamoDB.DocumentClient({region: '{region}'}); // change this
 
-        exports.handler = function(event, context, callback) {
-            let ISO_Date = new Date().toISOString();
-            
-            var params = {
-                Item: {
-                    id: "{publish_topic}", // change this
-                    timestamp:  Date.now(),
-                    payload:{
-                    "datetime":    ISO_Date, 
-                    "temperature": event.temperature,
-                    "humidity":    event.humidity
-                    },
+    exports.handler = function(event, context, callback) {
+        let ISO_Date = new Date().toISOString();
+        
+        var params = {
+            Item: {
+                id: "{publish_topic}", // change this
+                timestamp:  Date.now(),
+                payload:{
+                "datetime":    ISO_Date, 
+                "temperature": event.temperature,
+                "humidity":    event.humidity
                 },
-                TableName: '{table_name}' // change this
-            };
-            
-            docClient.put(params, function(err, data) {
-                if (err) callback(err, err.stack);
-                else     callback(null,data);
-            });
+            },
+            TableName: '{table_name}' // change this
         };
-        ```
+        
+        docClient.put(params, function(err, data) {
+            if (err) callback(err, err.stack);
+            else     callback(null,data);
+        });
+    };
+    ```
 * To add IAM Role > Go to Configuration > Execution Role
   * Click Role name: `{role name}`
   * IAM > Role > Add permissions > Attach policies > Find `AmazonDynamoDB`
     * Select `AmazonDynamoDBFullAccess` > Attach pilices
     * Close page
 
-    ![Execution Role](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda02.png?raw=true)
+        ![Execution Role](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda02.png?raw=true)
 
-    ![Permission](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda03.png?raw=true)
+        ![Permission](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda03.png?raw=true)
 
     * (Optional) You can use source below to allow only `PutItem` into DynamoDB.
-    ```json
-    {
-        "Version": "2012-10-17",
-        "Statement": {
-            "Effect": "Allow",
-            "Action": "dynamodb:PutItem",
-            "Resource": "arn:aws:dynamodb:<YOUR-AWS-REGION>:<YOUR-AWS-ACCOUNT>:table/<YOUR-DYNAMODB-TABLE>"
+        ```json
+        {
+            "Version": "2012-10-17",
+            "Statement": {
+                "Effect": "Allow",
+                "Action": "dynamodb:PutItem",
+                "Resource": "arn:aws:dynamodb:{region}:{account}:table/{table_name}"
+            }
         }
-    }
-    ```
+        ```
 
 * Test > Go to Test in AWS Lambda page
   * Test event action > Select `Create new event`
@@ -212,7 +211,7 @@ To create this project, you can implement follwing these step below:
 ![Download Certificates](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot07.png?raw=true)
 
 ### STEP 4: Connect ESP32 to AWS IoT via MQTT protocol
-* Install Arduino IDE: https://www.arduino.cc/en/software (Select follow by your OS)
+* Install Arduino IDE: [Download](https://www.arduino.cc/en/software "download arduino") (Select follow by your OS)
     * Setup Arduino IDE for ESP32 and DHT22
         * Preferences > Additional Board Manager URLs: `https://dl.espressif.com/dl/package_esp32_index.json`
         * Tool > Board Manager > Select `Type Contribute`
@@ -227,8 +226,7 @@ To create this project, you can implement follwing these step below:
 
 ![Arduino Lib](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/arduino01.png?raw=true)
 
-* Source
-  * `arduino/arduino.ino`
+* Source: `arduino/arduino.ino`
   * You can change the value in parameters like this:
     ```cpp
     #define THINGNAME "{thing_name}" // change this
@@ -278,8 +276,7 @@ To create this project, you can implement follwing these step below:
 
 ![Cognito](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/cognito/cognito01.png?raw=true)
 
-* Source
-  * `visualize/generate.js`
+* Source: `visualize/generate.js`
   * Paste your AWS Credentials into `visualize/generate.js`
     ```js
     // Initialize the Amazon Cognito credentials provider
