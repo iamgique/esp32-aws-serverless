@@ -9,18 +9,18 @@ Connecting ESP32 to AWS IoT via MQTT protocol, Visualize Temperature and Humidit
   - [Prerequisite](#prerequisite)
   - [Technologies](#technologies)
   - [Handbook](#handbook)
-        - [STEP 0: Sign-Up or Sign-In to AWS console management.](#step-0-sign-up-or-sign-in-to-aws-console-management)
-        - [STEP 1: Create DynamoDB](#step-1-create-dynamodb)
-        - [STEP 2: Create Lambda](#step-2-create-lambda)
-        - [STEP 3: Create Message Routing and Things (IoT Core)](#step-3-create-message-routing-and-things-iot-core)
-        - [STEP 4: Cognito Identity Pools](#step-4-cognito-identity-pools)
-        - [STEP 5: Create S3 Bucket](#step-5-create-s3-bucket)
-        - [STEP 6: Install Arduino IDE - ESP32 & DHT22](#step-6-install-arduino-ide---esp32--dht22)
-        - [STEP 8: Visualize](#step-8-visualize)
+      - [STEP 0: Sign-Up or Sign-In to AWS console management.](#step-0-sign-up-or-sign-in-to-aws-console-management)
+      - [STEP 1: Create DynamoDB](#step-1-create-dynamodb)
+      - [STEP 2: Create Lambda](#step-2-create-lambda)
+      - [STEP 3: Create Message Routing and Things (IoT Core)](#step-3-create-message-routing-and-things-iot-core)
+      - [STEP 4: Cognito Identity Pools](#step-4-cognito-identity-pools)
+      - [STEP 5: Create S3 Bucket](#step-5-create-s3-bucket)
+      - [STEP 6: Install Arduino IDE - ESP32 & DHT22](#step-6-install-arduino-ide---esp32--dht22)
+      - [STEP 8: Visualize](#step-8-visualize)
     - [Change file](#change-file)
 
 ## General info
-This project is using to keep the necessary source code and handbook to demo Internet of Things with AWS Serverless
+This project is the handbook and using to keep the necessary source code to demo Internet of Things with AWS Serverless
 
 ![Visualize](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot02.png?raw=true)
 
@@ -53,9 +53,9 @@ Project is created with:
 
 ## Handbook
 To create this project, you can implement follwing these step below:
-##### STEP 0: Sign-Up or Sign-In to AWS console management.
+#### STEP 0: Sign-Up or Sign-In to AWS console management.
 
-##### STEP 1: Create DynamoDB
+#### STEP 1: Create DynamoDB
 * Go to DynamoDB
 * Create Table
   * Fill Table name: `{table_name}`
@@ -64,9 +64,9 @@ To create this project, you can implement follwing these step below:
   * Sort key
     * timestamp: Number
 
-![DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB.png?raw=true)
+![DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB01.png?raw=true)
 
-##### STEP 2: Create Lambda
+#### STEP 2: Create Lambda
 * Go to AWS Lambda
 * Create Function
   * Author from scrach
@@ -131,22 +131,22 @@ To create this project, you can implement follwing these step below:
     ```
   * Test
 
-    ![Test](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda04.png?raw=true)
+    ![Test Lambda put to DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda04.png?raw=true)
 
 * View the items in DynamoDB
   * Go to DynamoDB console > Tables > Explore items > Select `table_name` > `Run`
 
-    ![Test](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB02.png?raw=true)
+    ![Explore items on DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB02.png?raw=true)
 
-##### STEP 3: Create Message Routing and Things (IoT Core)
+#### STEP 3: Create Message Routing and Things (IoT Core)
 
-##### STEP 4: Cognito Identity Pools
+#### STEP 4: Cognito Identity Pools
 
-##### STEP 5: Create S3 Bucket
+#### STEP 5: Create S3 Bucket
 
-##### STEP 6: Install Arduino IDE - ESP32 & DHT22
+#### STEP 6: Install Arduino IDE - ESP32 & DHT22
 
-##### STEP 8: Visualize
+#### STEP 8: Visualize
 
 ### Change file
 ```
