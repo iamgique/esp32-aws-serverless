@@ -58,6 +58,7 @@ To create this project, you can implement follwing these step below:
 ### STEP 0: Sign-Up or Sign-In to AWS console management.
 
 ### STEP 1: Create DynamoDB
+Create DynamoDB to store the data with `key` and `value` (payload).
 * Go to DynamoDB
 * Create Table
   * Fill Table name: `{table_name}`
@@ -69,6 +70,7 @@ To create this project, you can implement follwing these step below:
 ![DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB01.png?raw=true)
 
 ### STEP 2: Create AWS Lambda
+Create AWS Lambda function to receive data from AWS IoT and `put` it into DynamoDB.
 * Go to AWS Lambda
 * Create Function
   * Author from scrach
@@ -110,7 +112,7 @@ To create this project, you can implement follwing these step below:
     };
     ```
 * To add IAM Role > Go to Configuration > Execution Role
-  * Click Role name: `{role name}`
+  * Click: Role name: `{role name}`
   * IAM > Role > Add permissions > Attach policies > Find `AmazonDynamoDB`
     * Select `AmazonDynamoDBFullAccess` > Attach pilices
     * Close page
@@ -152,8 +154,10 @@ To create this project, you can implement follwing these step below:
     ![Explore items on DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB02.png?raw=true)
 
 ### STEP 3: AWS IoT Core (Create Message Routing and Things)
-* Go to AWS IoT > Message Routing
+* Go to AWS IoT
 #### Create Rule
+Create Rule to be message route to AWS Lambda.
+* Go to Message Routing
   * Fill in `{publish_topic}` (The rule name that you want to manage routing e.g. `esp32/pubTopic` or `demoPubTopic`)
   * SQL statement 
     * `SELECT * FROM '{publish_topic}'` e.g. `SELECT * FROM 'esp32/pubTopic'`
@@ -177,15 +181,16 @@ To create this project, you can implement follwing these step below:
         "humidity": 65
     }
     ```
-  ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot04.png?raw=true)
+    ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot04.png?raw=true)
 
 #### Create Things
-  * Manage > All devices > Things > `Create Things`
-  * Click `Create Single Thing` 
+Create Things to receive the `MQTT Protocol` from physical `ESP32`.
+* Go to Manage > All devices > Things > `Create Things`
+  * Click: `Create Single Thing` 
   * Thing properties > Thing name
     * Fill in: `{thing_name}`
     * Select `Auto-generate a new certificate`
-    * Attach policies to certificate > Click `Create policy`
+    * Attach policies to certificate > Click: `Create policy`
       * Policy properties > Policy name
         * Fill in: `{thing_policy_name}`
       * Policy statements > Policy document (Add new statements `loop` 4 times)
@@ -194,7 +199,7 @@ To create this project, you can implement follwing these step below:
         * Policy resource: `*`
     * Attach policies to certificate > `refresh`
       * Select: `{thing_policy_name}`
-      * Create thing
+      * `Create thing`
   * Download Certificate
     * Device certificate: `*.pem.crt` (Use this)
     * Key file
@@ -211,18 +216,19 @@ To create this project, you can implement follwing these step below:
 ![Download Certificates](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot07.png?raw=true)
 
 ### STEP 4: Connect ESP32 to AWS IoT via MQTT protocol
+Prepare the software, ESP32 and DHT22 micro controller for send the data to AWS IoT via MQTT protocol.
 * Install Arduino IDE: [Download](https://www.arduino.cc/en/software "download arduino") (Select follow by your OS)
-    * Setup Arduino IDE for ESP32 and DHT22
-        * Preferences > Additional Board Manager URLs: `https://dl.espressif.com/dl/package_esp32_index.json`
-        * Tool > Board Manager > Select `Type Contribute`
-            * Fill in: `esp32` > Install
-        * Tool > Manage Libraries...
-            * Fill in: `WiFi` > Install
-            * Fill in: `ArduinoJSON` > Install
-            * Fill in: `PubSubClient` > Install
-            * Fill in: `DHT Sensor` > Install
-        * Tool > Board > `ESP32 Dev Module`
-        * Tool > Port > `Up to your port`
+  * Setup Arduino IDE for ESP32 and DHT22
+    * Preferences > Additional Board Manager URLs: `https://dl.espressif.com/dl/package_esp32_index.json`
+    * Tool > Board Manager > Select `Type Contribute`
+        * Fill in: `esp32` > Install
+    * Tool > Manage Libraries...
+        * Fill in: `WiFi` > Install
+        * Fill in: `ArduinoJSON` > Install
+        * Fill in: `PubSubClient` > Install
+        * Fill in: `DHT Sensor` > Install
+    * Tool > Board > `ESP32 Dev Module`
+    * Tool > Port > `Up to your port`
 
 ![Arduino Lib](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/arduino01.png?raw=true)
 
@@ -258,8 +264,18 @@ To create this project, you can implement follwing these step below:
 
     #define AWS_IOT_PUBLISH_TOPIC   "{publish_topic}" // change this
     ```
+* Verify the source via `Arduino IDE`
+* Connect physical `ESP32` and `DHT22`
+  * This step follow your physical micro controller. 
+  * You must know the pinout of ESP32 and DHT22 (VCC(+), DATA(I/O) and GDN)
+  ![ESP32 and DHT22](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/esp32-dht22-1.png?raw=true)
+  ![ESP32 and DHT22](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/esp32-dht22-2.jpg?raw=true)
+* Connect `ESP32` to your `computer/laptop` 
+* Upload the source to ESP32
+
 
 ### STEP 5: Cognito Identity Pools
+Create Identity pools to get AWS Credentials with Unauthenticated identities and attach `AmazonDynamoDBReadOnlyAccess` policies into `Cognito Unauthenticated role`.
 * Create Identity Pools
 * Go to AWS Cognito
   * Click: `Manage Identity Pools`
@@ -287,11 +303,12 @@ To create this project, you can implement follwing these step below:
     ```
 
 * Go to IAM Role
-* To attach policies into `Cognito_*Unauth_Role`
+* For attach policies into `Cognito_*Unauth_Role`
 * Access Management > Role
   * Roles
     * Fill in: `cognito`
     * If found `Cognito_*Auth_Role` and `Cognito_*Unauth_Role`, is correct
+    
     ![IAM Role](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/cognito/cognito02.png?raw=true)
   * Click: `Cognito_*_Unauth_Role`
     * Permissions > Add permissions > `Attach policies`
@@ -299,11 +316,11 @@ To create this project, you can implement follwing these step below:
       * Fill in: `Dynamo`
       * Check: `AmazonDynamoDBReadOnlyAccess`
       * Attach policies
-
+    
     ![Attach policies](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/cognito/cognito02.png?raw=true)
 
 ### STEP 6: Create S3 Bucket
-* 6
+Create AWS `S3 Bucket` to be the static web application.
 
 ### STEP 7: Visualize
 * 7
