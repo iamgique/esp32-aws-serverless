@@ -12,7 +12,7 @@ Connecting ESP32 to AWS IoT via MQTT protocol, Visualize Temperature and Humidit
       - [STEP 0: Sign-Up or Sign-In to AWS console management.](#step-0-sign-up-or-sign-in-to-aws-console-management)
       - [STEP 1: Create DynamoDB](#step-1-create-dynamodb)
       - [STEP 2: Create Lambda](#step-2-create-lambda)
-      - [STEP 3: Create Message Routing and Things (IoT Core)](#step-3-create-message-routing-and-things-iot-core)
+      - [STEP 3: IoT Core (Create Message Routing and Things)](#step-3-iot-core-create-message-routing-and-things)
       - [STEP 4: Cognito Identity Pools](#step-4-cognito-identity-pools)
       - [STEP 5: Create S3 Bucket](#step-5-create-s3-bucket)
       - [STEP 6: Install Arduino IDE - ESP32 & DHT22](#step-6-install-arduino-ide---esp32--dht22)
@@ -138,7 +138,23 @@ To create this project, you can implement follwing these step below:
 
     ![Explore items on DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB02.png?raw=true)
 
-#### STEP 3: Create Message Routing and Things (IoT Core)
+#### STEP 3: IoT Core (Create Message Routing and Things)
+* Go to AWS IoT > Message Routing
+* Create Rule
+  * Fill in `{rule_name}` (The rule name that you want to manage routing e.g. `esp32/pubTopic` or `demoPubTopic`)
+  * SQL statement 
+    * `SELECT * FROM '{publish_topic}'` e.g. `SELECT * FROM 'esp32/pubTopic'`
+  * Rule Action
+    * Select: `Lambda`
+    * Lambda function select: `{function_name}` (Lambda function name that you created)
+
+    ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot01.png?raw=true)
+
+    ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot02.png?raw=true)
+
+    ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot03.png?raw=true)
+
+* Create Things
 
 #### STEP 4: Cognito Identity Pools
 
