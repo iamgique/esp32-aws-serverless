@@ -11,12 +11,12 @@ Connecting ESP32 to AWS IoT via MQTT protocol, Visualize Temperature and Humidit
   - [Handbook](#handbook)
       - [STEP 0: Sign-Up or Sign-In to AWS console management.](#step-0-sign-up-or-sign-in-to-aws-console-management)
       - [STEP 1: Create DynamoDB](#step-1-create-dynamodb)
-      - [STEP 2: Create Lambda](#step-2-create-lambda)
-      - [STEP 3: IoT Core (Create Message Routing and Things)](#step-3-iot-core-create-message-routing-and-things)
-      - [STEP 4: Cognito Identity Pools](#step-4-cognito-identity-pools)
-      - [STEP 5: Create S3 Bucket](#step-5-create-s3-bucket)
-      - [STEP 6: Install Arduino IDE - ESP32 & DHT22](#step-6-install-arduino-ide---esp32--dht22)
-      - [STEP 8: Visualize](#step-8-visualize)
+      - [STEP 2: Create AWS Lambda](#step-2-create-aws-lambda)
+      - [STEP 3: AWS IoT Core (Create Message Routing and Things)](#step-3-aws-iot-core-create-message-routing-and-things)
+      - [STEP 4: Connect ESP32 to AWS IoT via MQTT protocol](#step-4-connect-esp32-to-aws-iot-via-mqtt-protocol)
+      - [STEP 5: Cognito Identity Pools](#step-5-cognito-identity-pools)
+      - [STEP 6: Create S3 Bucket](#step-6-create-s3-bucket)
+      - [STEP 7: Visualize](#step-7-visualize)
     - [Change file](#change-file)
 
 ## General info
@@ -66,7 +66,7 @@ To create this project, you can implement follwing these step below:
 
 ![DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB01.png?raw=true)
 
-#### STEP 2: Create Lambda
+#### STEP 2: Create AWS Lambda
 * Go to AWS Lambda
 * Create Function
   * Author from scrach
@@ -82,7 +82,7 @@ To create this project, you can implement follwing these step below:
     * Fill in `{region}` (The region that you create on DynamoDB)
     * Fill in `{publish_topic}` (This is using for prepare to put data into DynamoDB e.g. `esp32/pubTopic` or `demoPubTopic`)
     * Fill in `{table_name}` (Fill the table name that you created)
-        ```
+        ```js
         const AWS = require('aws-sdk');
         const docClient = new AWS.DynamoDB.DocumentClient({region: '{region}'}); // change this
 
@@ -118,12 +118,24 @@ To create this project, you can implement follwing these step below:
 
     ![Permission](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/lambda/lambda03.png?raw=true)
 
+    * (Optional) You can use source below to allow only `PutItem` into DynamoDB.
+    ```json
+    {
+        "Version": "2012-10-17",
+        "Statement": {
+            "Effect": "Allow",
+            "Action": "dynamodb:PutItem",
+            "Resource": "arn:aws:dynamodb:<YOUR-AWS-REGION>:<YOUR-AWS-ACCOUNT>:table/<YOUR-DYNAMODB-TABLE>"
+        }
+    }
+    ```
+
 * Test > Go to Test in AWS Lambda page
   * Test event action > Select `Create new event`
-  * Fill in Event name: `{event name}`
+  * Fill in Event name: `{event_name}`
   * Event sharing settings: `Private`
   * Event JSON > Format `JSON`
-    ```
+    ```json
     {
         "temperature": 23,
         "humidity": 72
@@ -138,10 +150,10 @@ To create this project, you can implement follwing these step below:
 
     ![Explore items on DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB02.png?raw=true)
 
-#### STEP 3: IoT Core (Create Message Routing and Things)
+#### STEP 3: AWS IoT Core (Create Message Routing and Things)
 * Go to AWS IoT > Message Routing
 * Create Rule
-  * Fill in `{rule_name}` (The rule name that you want to manage routing e.g. `esp32/pubTopic` or `demoPubTopic`)
+  * Fill in `{publish_topic}` (The rule name that you want to manage routing e.g. `esp32/pubTopic` or `demoPubTopic`)
   * SQL statement 
     * `SELECT * FROM '{publish_topic}'` e.g. `SELECT * FROM 'esp32/pubTopic'`
   * Rule Action
@@ -154,15 +166,104 @@ To create this project, you can implement follwing these step below:
 
     ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot03.png?raw=true)
 
+* Test
+  * Go to Test > MQTT test client > Select `Publish to a topic`
+  * Topic name: `{publish_topic}`
+  * Message payload:
+    ```json
+    {
+        "temperature": 34,
+        "humidity": 65
+    }
+    ```
+  ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot04.png?raw=true)
+
 * Create Things
+  * Manage > All devices > Things > `Create Things`
+  * Click `Create Single Thing` 
+  * Thing properties > Thing name
+    * Fill in: `{thing_name}`
+    * Select `Auto-generate a new certificate`
+    * Attach policies to certificate > Click `Create policy`
+      * Policy properties > Policy name
+        * Fill in: `{thing_policy_name}`
+      * Policy statements > Policy document (Add new statements `loop` 4 times)
+        * Policy effect: `Allow`
+        * Policy action: `iot:Connect`, `iot:Publish`, `iot:Receive`, `iot:Subscribe`
+        * Policy resource: `*`
+    * Attach policies to certificate > `refresh`
+      * Select: `{thing_policy_name}`
+      * Create thing
+  * Download Certificate
+    * Device certificate: `*.pem.crt` (Use this)
+    * Key file
+      * Public key file: `*-public.pem.key` (Use this)
+      * Private key file: `*-private.pem.key`
+    * Root CA certificates
+      * RSA 2048 bit key: Amazon Root CA 1: `AmazonRootCA1.pem` (Use this)
+      * ECC 256 bit key: Amazon Root CA 3: `AmazonRootCA3.pem` (Optional)
 
-#### STEP 4: Cognito Identity Pools
+![Create Thing](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot05.png?raw=true)
 
-#### STEP 5: Create S3 Bucket
+![Create Policy](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot06.png?raw=true)
 
-#### STEP 6: Install Arduino IDE - ESP32 & DHT22
+![Download Certificates](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot07.png?raw=true)
 
-#### STEP 8: Visualize
+#### STEP 4: Connect ESP32 to AWS IoT via MQTT protocol
+* Install Arduino IDE: https://www.arduino.cc/en/software (Select follow by your OS)
+    * Setup Arduino IDE for ESP32 and DHT22
+        * Preferences > Additional Board Manager URLs: `https://dl.espressif.com/dl/package_esp32_index.json`
+        * Tool > Board Manager > Select `Type Contribute`
+            * Fill in: `esp32` > Install
+        * Tool > Manage Libraries...
+            * Fill in: `WiFi` > Install
+            * Fill in: `ArduinoJSON` > Install
+            * Fill in: `PubSubClient` > Install
+            * Fill in: `dht sensor` > Install
+        * Tool > Board > `ESP32 Dev Module`
+        * Tool > Port > `Up to your port`
+* Code Source
+  * `arduino/arduino.ino`
+  * You can change the value in parameters like this:
+    ```cpp
+    #define THINGNAME "{thing_name}" // change this
+    
+    const char WIFI_SSID[] = "{WiFi_SSID}"; // change this
+    const char WIFI_PASSWORD[] = "{WiFi_PASSWORD}"; // change this
+    const char AWS_IOT_ENDPOINT[] = "{AWS_IOT_ENDPOINT}"; // change this
+
+    // Amazon Root CA 1 // change this
+    static const char AWS_CERT_CA[] PROGMEM = R"EOF(
+    -----BEGIN CERTIFICATE-----
+    {AmazonRootCA1.pem}
+    -----END CERTIFICATE-----
+    )EOF";
+    
+    // Device Certificate // change this
+    static const char AWS_CERT_CRT[] PROGMEM = R"KEY(
+    -----BEGIN CERTIFICATE-----
+    {certificate.pem.crt}
+    -----END CERTIFICATE-----
+    )KEY";
+    
+    // Device Private Key // change this
+    static const char AWS_CERT_PRIVATE[] PROGMEM = R"KEY(
+    -----BEGIN RSA PRIVATE KEY-----
+    {private.pem.key}
+    -----END RSA PRIVATE KEY-----
+    )KEY";
+
+    #define AWS_IOT_PUBLISH_TOPIC   "{publish_topic}" // change this
+    ```
+
+#### STEP 5: Cognito Identity Pools
+* 5
+
+#### STEP 6: Create S3 Bucket
+* 6
+
+#### STEP 7: Visualize
+* 7
 
 ### Change file
 ```
