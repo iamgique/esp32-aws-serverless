@@ -18,8 +18,7 @@ Connecting ESP32 to AWS IoT via MQTT protocol, Visualize Temperature and Humidit
     - [STEP 4: Connect ESP32 to AWS IoT via MQTT protocol](#step-4-connect-esp32-to-aws-iot-via-mqtt-protocol)
     - [STEP 5: Cognito Identity Pools](#step-5-cognito-identity-pools)
     - [STEP 6: Create S3 Bucket](#step-6-create-s3-bucket)
-    - [STEP 7: Visualize](#step-7-visualize)
-  - [Change file](#change-file)
+  - [Appendix](#appendix)
 
 ## General info
 This project is the handbook and using to keep the necessary source code to demo Internet of Things with AWS Serverless
@@ -324,14 +323,46 @@ Create Identity pools to get AWS Credentials with Unauthenticated identities and
     ![Attach policies](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/cognito/cognito02.png?raw=true)
 
 ### STEP 6: Create S3 Bucket
-Create AWS `S3 Bucket` to be the static web application.
+Create AWS `S3 Bucket` to store and be the static web application.
+* Go to AWS S3
+  * Click: `Create Bucket`
+    * Bucket name
+      * Fill in: `{bucket_name}`
+    * Block Public Access settings for this bucket
+      * Block all public access: `Check Empty`
+    * `Create Bucket`
+  * Go to properties
+    * Scroll down > Static website hosting
+      * Static website hosting: `Enable`
+      * Hosting type: `Host a static website`
+      * Index document: `index.html`
+      * Save changes
+  * Go to permissions
+    * Bucket policy: `Edit`
+        ```json
+        {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "PublicRead",
+                    "Effect": "Allow",
+                    "Principal": "*",
+                    "Action": "s3:GetObject",
+                    "Resource": "arn:aws:s3:::{bucket_name}/*"
+                }
+            ]
+        }
+        ```
+  * Source: `visualize/generate.js`
+    * Don't forgot to change `generate.js`
+  * Go to Objects
+    * Click: `Upload` > `Add files` > Directory `visualize`
+      * Select: `generate.js`, `index.html`, `style.css`, `logo.css`
+      * Upload > Close
+  * Go to Properties
+    * Static website hosting > Bucket website endpoint
+      * `http://{bucket_name}.s3-website-{region}.amazonaws.com/`
 
-### STEP 7: Visualize
-* 7
+* Finish
 
-## Change file
-```
-arduino/arduino.cpp
-lambda/index.js
-visualize/generate.js
-```
+## Appendix
