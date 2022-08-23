@@ -221,10 +221,13 @@ To create this project, you can implement follwing these step below:
             * Fill in: `WiFi` > Install
             * Fill in: `ArduinoJSON` > Install
             * Fill in: `PubSubClient` > Install
-            * Fill in: `dht sensor` > Install
+            * Fill in: `DHT Sensor` > Install
         * Tool > Board > `ESP32 Dev Module`
         * Tool > Port > `Up to your port`
-* Code Source
+
+![Arduino Lib](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/arduino01.png?raw=true)
+
+* Source
   * `arduino/arduino.ino`
   * You can change the value in parameters like this:
     ```cpp
@@ -259,7 +262,48 @@ To create this project, you can implement follwing these step below:
     ```
 
 ### STEP 5: Cognito Identity Pools
-* 5
+* Create Identity Pools
+* Go to AWS Cognito
+  * Click: `Manage Identity Pools`
+  * Click: `Create new Identity Pool`
+  * Fill in Identity pool name: `{cognito_identity_pool_name}`
+  * Unauthenticated identities
+    * Check: `Enable access to unauthenticated identities`
+  * Authentication flow settings 
+    * Check: `Allow Basic (Classic) Flow`
+  * Click: Create Pool > Allow
+  * Getting started with Amazon Cognito
+    * Platform: `JavaScript`
+    * `Copy`
+
+![Cognito](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/cognito/cognito01.png?raw=true)
+
+* Source
+  * `visualize/generate.js`
+  * Paste your AWS Credentials into `visualize/generate.js`
+    ```js
+    // Initialize the Amazon Cognito credentials provider
+    AWS.config.region = '{region}'; // Region
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: '{region}:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+    });
+    ```
+
+* Go to IAM Role
+* To attach policies into `Cognito_*Unauth_Role`
+* Access Management > Role
+  * Roles
+    * Fill in: `cognito`
+    * If found `Cognito_*Auth_Role` and `Cognito_*Unauth_Role`, is correct
+    ![IAM Role](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/cognito/cognito02.png?raw=true)
+  * Click: `Cognito_*_Unauth_Role`
+    * Permissions > Add permissions > `Attach policies`
+    * Other permissions policies
+      * Fill in: `Dynamo`
+      * Check: `AmazonDynamoDBReadOnlyAccess`
+      * Attach policies
+
+    ![Attach policies](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/cognito/cognito02.png?raw=true)
 
 ### STEP 6: Create S3 Bucket
 * 6
