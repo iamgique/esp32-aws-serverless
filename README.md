@@ -9,15 +9,17 @@ Connecting ESP32 to AWS IoT via MQTT protocol, Visualize Temperature and Humidit
   - [Prerequisite](#prerequisite)
   - [Technologies](#technologies)
   - [Handbook](#handbook)
-      - [STEP 0: Sign-Up or Sign-In to AWS console management.](#step-0-sign-up-or-sign-in-to-aws-console-management)
-      - [STEP 1: Create DynamoDB](#step-1-create-dynamodb)
-      - [STEP 2: Create AWS Lambda](#step-2-create-aws-lambda)
-      - [STEP 3: AWS IoT Core (Create Message Routing and Things)](#step-3-aws-iot-core-create-message-routing-and-things)
-      - [STEP 4: Connect ESP32 to AWS IoT via MQTT protocol](#step-4-connect-esp32-to-aws-iot-via-mqtt-protocol)
-      - [STEP 5: Cognito Identity Pools](#step-5-cognito-identity-pools)
-      - [STEP 6: Create S3 Bucket](#step-6-create-s3-bucket)
-      - [STEP 7: Visualize](#step-7-visualize)
-    - [Change file](#change-file)
+    - [STEP 0: Sign-Up or Sign-In to AWS console management.](#step-0-sign-up-or-sign-in-to-aws-console-management)
+    - [STEP 1: Create DynamoDB](#step-1-create-dynamodb)
+    - [STEP 2: Create AWS Lambda](#step-2-create-aws-lambda)
+    - [STEP 3: AWS IoT Core (Create Message Routing and Things)](#step-3-aws-iot-core-create-message-routing-and-things)
+      - [Create Rule](#create-rule)
+      - [Create Things](#create-things)
+    - [STEP 4: Connect ESP32 to AWS IoT via MQTT protocol](#step-4-connect-esp32-to-aws-iot-via-mqtt-protocol)
+    - [STEP 5: Cognito Identity Pools](#step-5-cognito-identity-pools)
+    - [STEP 6: Create S3 Bucket](#step-6-create-s3-bucket)
+    - [STEP 7: Visualize](#step-7-visualize)
+  - [Change file](#change-file)
 
 ## General info
 This project is the handbook and using to keep the necessary source code to demo Internet of Things with AWS Serverless
@@ -53,9 +55,9 @@ Project is created with:
 
 ## Handbook
 To create this project, you can implement follwing these step below:
-#### STEP 0: Sign-Up or Sign-In to AWS console management.
+### STEP 0: Sign-Up or Sign-In to AWS console management.
 
-#### STEP 1: Create DynamoDB
+### STEP 1: Create DynamoDB
 * Go to DynamoDB
 * Create Table
   * Fill Table name: `{table_name}`
@@ -66,7 +68,7 @@ To create this project, you can implement follwing these step below:
 
 ![DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB01.png?raw=true)
 
-#### STEP 2: Create AWS Lambda
+### STEP 2: Create AWS Lambda
 * Go to AWS Lambda
 * Create Function
   * Author from scrach
@@ -150,9 +152,9 @@ To create this project, you can implement follwing these step below:
 
     ![Explore items on DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB02.png?raw=true)
 
-#### STEP 3: AWS IoT Core (Create Message Routing and Things)
+### STEP 3: AWS IoT Core (Create Message Routing and Things)
 * Go to AWS IoT > Message Routing
-* Create Rule
+#### Create Rule
   * Fill in `{publish_topic}` (The rule name that you want to manage routing e.g. `esp32/pubTopic` or `demoPubTopic`)
   * SQL statement 
     * `SELECT * FROM '{publish_topic}'` e.g. `SELECT * FROM 'esp32/pubTopic'`
@@ -178,7 +180,7 @@ To create this project, you can implement follwing these step below:
     ```
   ![IoT](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot04.png?raw=true)
 
-* Create Things
+#### Create Things
   * Manage > All devices > Things > `Create Things`
   * Click `Create Single Thing` 
   * Thing properties > Thing name
@@ -209,7 +211,7 @@ To create this project, you can implement follwing these step below:
 
 ![Download Certificates](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot07.png?raw=true)
 
-#### STEP 4: Connect ESP32 to AWS IoT via MQTT protocol
+### STEP 4: Connect ESP32 to AWS IoT via MQTT protocol
 * Install Arduino IDE: https://www.arduino.cc/en/software (Select follow by your OS)
     * Setup Arduino IDE for ESP32 and DHT22
         * Preferences > Additional Board Manager URLs: `https://dl.espressif.com/dl/package_esp32_index.json`
@@ -256,16 +258,16 @@ To create this project, you can implement follwing these step below:
     #define AWS_IOT_PUBLISH_TOPIC   "{publish_topic}" // change this
     ```
 
-#### STEP 5: Cognito Identity Pools
+### STEP 5: Cognito Identity Pools
 * 5
 
-#### STEP 6: Create S3 Bucket
+### STEP 6: Create S3 Bucket
 * 6
 
-#### STEP 7: Visualize
+### STEP 7: Visualize
 * 7
 
-### Change file
+## Change file
 ```
 arduino/arduino.cpp
 lambda/index.js
