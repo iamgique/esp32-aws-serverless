@@ -268,8 +268,8 @@ Prepare the software, ESP32 and DHT22 micro controller for send the data to AWS 
 * Connect physical `ESP32` and `DHT22`
   * This step follow your physical micro controller. 
   * You must know the pinout of ESP32 and DHT22 (VCC(+), DATA(I/O) and GDN)
-  ![ESP32 and DHT22](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/esp32-dht22-1.png?raw=true)
-  ![ESP32 and DHT22](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/esp32-dht22-2.jpg?raw=true)
+  ![ESP32 and DHT22](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/esp32-dht22-01.png?raw=true)
+  ![ESP32 and DHT22](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/arduino/esp32-dht22-02.png?raw=true)
 * Connect `ESP32` to your `computer/laptop` 
 * Upload the source to ESP32
 
