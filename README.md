@@ -32,7 +32,7 @@ AWS Cloud Services, Serverless, NoSQL, Arduino ESP32, JavaScript, and HTML.
 ![Visualize](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot02.png?raw=true)
 
 ### Architecture
-![Structure](https://github.com/iamgique/esp32-aws-serverless/blob/main/architecture/architecture01.png?raw=true)
+![Structure](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/architecture/architecture01.png?raw=true)
 
 ## Prerequisite
 ```
