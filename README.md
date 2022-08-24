@@ -11,13 +11,13 @@ Connecting <b>ESP32</b> to <b>AWS IoT</b> via MQTT protocol, Visualize Temperatu
   - [Technologies](#technologies)
   - [Handbook](#handbook)
     - [STEP 0: Sign-Up or Sign-In to AWS console management.](#step-0-sign-up-or-sign-in-to-aws-console-management)
-    - [STEP 1: Create DynamoDB](#step-1-create-dynamodb)
+    - [STEP 1: Create Amazon DynamoDB](#step-1-create-amazon-dynamodb)
     - [STEP 2: Create AWS Lambda](#step-2-create-aws-lambda)
     - [STEP 3: AWS IoT Core (Create Message Routing and Things)](#step-3-aws-iot-core-create-message-routing-and-things)
       - [Create Rule](#create-rule)
       - [Create Things](#create-things)
     - [STEP 4: Connect ESP32 to AWS IoT via MQTT protocol](#step-4-connect-esp32-to-aws-iot-via-mqtt-protocol)
-    - [STEP 5: Cognito Identity Pools](#step-5-cognito-identity-pools)
+    - [STEP 5: Amazon Cognito Identity Pools](#step-5-amazon-cognito-identity-pools)
     - [STEP 6: Create S3 Bucket](#step-6-create-s3-bucket)
   - [Appendix](#appendix)
 
@@ -32,7 +32,7 @@ AWS Cloud Services, Serverless, NoSQL, Arduino ESP32, JavaScript, and HTML.
 ![Visualize](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot02.png?raw=true)
 
 ### Architecture
-![Structure](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/screenshot01.png?raw=true)
+![Structure](https://github.com/iamgique/esp32-aws-serverless/blob/main/architecture/architecture01.png?raw=true)
 
 ## Prerequisite
 ```
@@ -45,10 +45,10 @@ DHT22 (Temperature Humidity Sensor)
 ## Technologies
 Project is created with:
 * AWS IoT Core
-* AWS DynamoDB
 * AWS Lambda
-* AWS Cognito
-* AWS S3
+* Amazon DynamoDB
+* Amazon Cognito
+* Amazon S3
 * Nodejs version: 16.x
 * C++ version: 2.33
 * Arduino WiFi library version: 1.2.7
@@ -61,7 +61,7 @@ To create this project, you can implement follwing these step below:
 ### STEP 0: Sign-Up or Sign-In to AWS console management.
 You can sign-up for a new account to use the free tier or sign in with your own account to AWS Console.
 ***
-### STEP 1: Create DynamoDB
+### STEP 1: Create Amazon DynamoDB
 Create DynamoDB to store the data with `key` and `value` (payload).
 * Go to DynamoDB
 * Create Table
@@ -282,10 +282,10 @@ Prepare the software, ESP32 and DHT22 micro controller for send the data to AWS 
 
 ![DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB03.png?raw=true)
 ***
-### STEP 5: Cognito Identity Pools
+### STEP 5: Amazon Cognito Identity Pools
 Create Identity pools to get AWS Credentials with Unauthenticated identities and attach `AmazonDynamoDBReadOnlyAccess` policies into `Cognito Unauthenticated role`.
 * Create Identity Pools
-* Go to AWS Cognito
+* Go to Amazon Cognito
   * Click: `Manage Identity Pools`
   * Click: `Create new Identity Pool`
   * Fill in Identity pool name: `{cognito_identity_pool_name}`
@@ -328,8 +328,8 @@ Create Identity pools to get AWS Credentials with Unauthenticated identities and
     ![Attach policies](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/cognito/cognito02.png?raw=true)
 ***
 ### STEP 6: Create S3 Bucket
-Create AWS `S3 Bucket` to store and be the static web application.
-* Go to AWS S3
+Create Amazon `S3 Bucket` to store and be the static web application.
+* Go to Amazon S3
   * Click: `Create Bucket`
     * Bucket name
       * Fill in: `{bucket_name}`
