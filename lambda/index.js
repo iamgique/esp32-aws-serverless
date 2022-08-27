@@ -1,10 +1,10 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient({region: '{region}'}); // change this
 
-exports.handler = function(event, context, callback) {
+exports.handler = async (event, context, callback) => {
     let ISO_Date = new Date().toISOString();
     
-    var params = {
+    const params = {
         Item: {
             id: "{publish_topic}", // change this
             timestamp:  Date.now(),
@@ -17,8 +17,10 @@ exports.handler = function(event, context, callback) {
         TableName: '{table_name}' // change this
     };
     
-    docClient.put(params, function(err, data) {
-        if (err) callback(err, err.stack);
-        else     callback(null,data);
-    });
+    try {
+      const data = await docClient.put(params).promise();
+      callback(null,data);
+    } catch (err) {
+      callback(err, err.stack);
+    }
 };

@@ -1,5 +1,5 @@
 # esp32-aws-serverless
-Connecting <b>ESP32</b> to <b>AWS IoT</b> via MQTT protocol, Visualize Temperature and Humidity into Web Application.
+Connecting <b>ESP32</b> to <b>AWS IoT Core</b> via MQTT protocol, Visualize Temperature and Humidity into Web Application.
 
 ## Table of contents
 - [esp32-aws-serverless](#esp32-aws-serverless)
@@ -16,7 +16,7 @@ Connecting <b>ESP32</b> to <b>AWS IoT</b> via MQTT protocol, Visualize Temperatu
     - [STEP 3: AWS IoT Core (Create Message Routing and Things)](#step-3-aws-iot-core-create-message-routing-and-things)
       - [Create Rule](#create-rule)
       - [Create Things](#create-things)
-    - [STEP 4: Connect ESP32 to AWS IoT via MQTT protocol](#step-4-connect-esp32-to-aws-iot-via-mqtt-protocol)
+    - [STEP 4: Connecting ESP32 to AWS IoT Core via MQTT protocol](#step-4-connecting-esp32-to-aws-iot-core-via-mqtt-protocol)
     - [STEP 5: Amazon Cognito Identity Pools](#step-5-amazon-cognito-identity-pools)
     - [STEP 6: Create S3 Bucket](#step-6-create-s3-bucket)
   - [Appendix](#appendix)
@@ -74,7 +74,7 @@ Create DynamoDB to store the data with `key` and `value` (payload).
 ![DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB01.png?raw=true)
 ***
 ### STEP 2: Create AWS Lambda
-Create AWS Lambda function to receive data from AWS IoT and `put` it into DynamoDB.
+Create AWS Lambda function to receive data from AWS IoT Core and `put` it into DynamoDB.
 * Go to AWS Lambda
 * Create Function
   * Author from scrach
@@ -156,7 +156,7 @@ Create AWS Lambda function to receive data from AWS IoT and `put` it into Dynamo
 ![Explore items on DynamoDB](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/dynamoDB/dynamoDB02.png?raw=true)
 ***
 ### STEP 3: AWS IoT Core (Create Message Routing and Things)
-* Go to AWS IoT
+* Go to AWS IoT Core
 #### Create Rule
 Create Rule to be message route to AWS Lambda.
 * Go to Message Routing
@@ -217,8 +217,8 @@ Create Things to receive the `MQTT Protocol` from physical `ESP32`.
 
 ![Download Certificates](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/iot/iot07.png?raw=true)
 ***
-### STEP 4: Connect ESP32 to AWS IoT via MQTT protocol
-Prepare the software, ESP32 and DHT22 micro controller for send the data to AWS IoT via MQTT protocol.
+### STEP 4: Connecting ESP32 to AWS IoT Core via MQTT protocol
+Prepare the software, ESP32 and DHT22 micro controller for send the data to AWS IoT Core via MQTT protocol.
 * Install Arduino IDE: [Download](https://www.arduino.cc/en/software "download arduino") (Select follow by your OS)
   * Setup Arduino IDE for ESP32 and DHT22
     * Preferences > Additional Board Manager URLs: `https://dl.espressif.com/dl/package_esp32_index.json`
