@@ -74,7 +74,6 @@ void connectAWS(){
   Serial.println("Connecting to AWS IoT...");
  
   while (!client.connect(THINGNAME)){
-    Serial.print(".");
     delay(100);
   }
  
