@@ -48,11 +48,12 @@ PubSubClient client(net);
 
 void setup(){
   Serial.begin(115200);
+  connectWiFi();
   connectAWS();
   dht.begin();
 }
- 
-void connectAWS(){
+
+void connectWiFi(){
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.println("Connecting to WiFi...");
@@ -60,7 +61,9 @@ void connectAWS(){
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
   }
+}
  
+void connectAWS(){
   net.setCACert(AWS_CERT_CA);
   net.setCertificate(AWS_CERT_CRT);
   net.setPrivateKey(AWS_CERT_PRIVATE);
