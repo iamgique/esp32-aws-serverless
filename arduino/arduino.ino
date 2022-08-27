@@ -8,7 +8,6 @@
 #define DHTPIN 23
 #define DHTTYPE DHT22
 
-#define SECRET
 #define THINGNAME "{thing_name}" // change this
  
 const char WIFI_SSID[] = "{WiFi_SSID}"; // change this
@@ -65,6 +64,7 @@ void connectAWS(){
   net.setCACert(AWS_CERT_CA);
   net.setCertificate(AWS_CERT_CRT);
   net.setPrivateKey(AWS_CERT_PRIVATE);
+  client.setKeepAlive(90);
   client.setServer(AWS_IOT_ENDPOINT, 8883);
  
   client.setCallback(messageHandler);
@@ -120,5 +120,5 @@ void loop(){
  
   publishMessage();
   client.loop();
-  delay(10000);
+  delay(60000);
 }
