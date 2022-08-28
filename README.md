@@ -7,7 +7,7 @@ Connecting <b>ESP32</b> to <b>AWS IoT Core</b> via MQTT protocol, Visualize Temp
   - [General info](#general-info)
     - [Basic Knowledge](#basic-knowledge)
     - [Architecture](#architecture)
-  - [Prerequisite](#prerequisite)
+  - [Prerequisites](#prerequisites)
   - [Technologies](#technologies)
   - [Handbook](#handbook)
     - [STEP 0: Sign-Up or Sign-In to AWS console management.](#step-0-sign-up-or-sign-in-to-aws-console-management)
@@ -34,7 +34,7 @@ AWS Cloud Services, Serverless, NoSQL, Arduino ESP32, JavaScript, and HTML.
 ### Architecture
 ![Structure](https://github.com/iamgique/esp32-aws-serverless/blob/main/screenshot/architecture/architecture01.png?raw=true)
 
-## Prerequisite
+## Prerequisites
 ```
 AWS Account
 Arduino IDE
@@ -63,7 +63,7 @@ You can sign-up for a new account to use the free tier or sign in with your own 
 ***
 ### STEP 1: Create Amazon DynamoDB
 Create DynamoDB to store the data with `key` and `value` (payload).
-* Go to DynamoDB
+* Go to Amazon DynamoDB
 * Create Table
   * Fill Table name: `{table_name}`
   * Partition key
